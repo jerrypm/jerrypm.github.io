@@ -67,6 +67,7 @@ This web version fixes several issues from the original iOS code:
 ```
 web-infinite-xox/
 ├── index.html          # Main HTML structure
+├── info-content.html   # Description About the game
 ├── styles.css          # CSS styling and animations
 ├── script.js           # Game logic and interactions
 └── README.md           # This file

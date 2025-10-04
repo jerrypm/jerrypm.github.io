@@ -23,6 +23,17 @@ class InfiniteTicTacToe {
     init() {
         this.bindEvents();
         this.updateDisplay();
+        this.loadInfoContent();
+    }
+
+    async loadInfoContent() {
+        try {
+            const response = await fetch('info-content.html');
+            const content = await response.text();
+            document.getElementById('info-modal-content').innerHTML = content;
+        } catch (error) {
+            console.error('Failed to load info content:', error);
+        }
     }
 
     bindEvents() {
@@ -35,6 +46,15 @@ class InfiniteTicTacToe {
         document.getElementById('reset-round-btn').addEventListener('click', () => this.resetRound());
         document.getElementById('new-game-btn').addEventListener('click', () => this.newGame());
         document.getElementById('play-again-btn').addEventListener('click', () => this.newGame());
+
+        // Info modal
+        document.getElementById('info-icon-btn').addEventListener('click', () => this.showInfoModal());
+        document.getElementById('close-info-btn').addEventListener('click', () => this.hideInfoModal());
+        document.getElementById('info-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'info-modal') {
+                this.hideInfoModal();
+            }
+        });
     }
 
     handleCellClick(index) {
@@ -483,16 +503,17 @@ class InfiniteTicTacToe {
         const cellWidth = boardRect.width / 3;
         const cellHeight = boardRect.height / 3;
         const gap = 8; // CSS gap between cells
+        const padding = 24; // Game board padding
 
         // Get grid positions for first and last cells
         const pos1 = this.getGridPosition(combo[0]);
         const pos2 = this.getGridPosition(combo[2]);
 
-        // Calculate actual pixel positions including gaps
-        const x1 = pos1.col * (cellWidth + gap) + cellWidth / 2;
-        const y1 = pos1.row * (cellHeight + gap) + cellHeight / 2;
-        const x2 = pos2.col * (cellWidth + gap) + cellWidth / 2;
-        const y2 = pos2.row * (cellHeight + gap) + cellHeight / 2;
+        // Calculate actual pixel positions including gaps and padding
+        const x1 = padding + pos1.col * (cellWidth + gap) + cellWidth / 2;
+        const y1 = padding + pos1.row * (cellHeight + gap) + cellHeight / 2;
+        const x2 = padding + pos2.col * (cellWidth + gap) + cellWidth / 2;
+        const y2 = padding + pos2.row * (cellHeight + gap) + cellHeight / 2;
 
         // Calculate line properties
         const length = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
@@ -647,6 +668,16 @@ class InfiniteTicTacToe {
 
     hideGameOverModal() {
         const modal = document.getElementById('game-over-modal');
+        modal.classList.remove('show');
+    }
+
+    showInfoModal() {
+        const modal = document.getElementById('info-modal');
+        modal.classList.add('show');
+    }
+
+    hideInfoModal() {
+        const modal = document.getElementById('info-modal');
         modal.classList.remove('show');
     }
 }
