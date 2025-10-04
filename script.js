@@ -496,39 +496,38 @@ class InfiniteTicTacToe {
 
     showWinningLine(combo) {
         const winningLine = document.getElementById('winning-line');
-        const gameBoard = document.querySelector('.game-board');
-        const boardRect = gameBoard.getBoundingClientRect();
+        const gameBoardContainer = document.querySelector('.game-board-container');
 
-        // Calculate grid positions (each cell is roughly 1/3 of board width/height)
-        const cellWidth = boardRect.width / 3;
-        const cellHeight = boardRect.height / 3;
-        const gap = 8; // CSS gap between cells
-        const padding = 24; // Game board padding
+        // Get the first and last cell elements in the winning combination
+        const firstCell = document.querySelector(`[data-index="${combo[0]}"]`);
+        const lastCell = document.querySelector(`[data-index="${combo[2]}"]`);
 
-        // Get grid positions for first and last cells
-        const pos1 = this.getGridPosition(combo[0]);
-        const pos2 = this.getGridPosition(combo[2]);
+        if (!firstCell || !lastCell) return;
 
-        // Calculate actual pixel positions including gaps and padding
-        const x1 = padding + pos1.col * (cellWidth + gap) + cellWidth / 2;
-        const y1 = padding + pos1.row * (cellHeight + gap) + cellHeight / 2;
-        const x2 = padding + pos2.col * (cellWidth + gap) + cellWidth / 2;
-        const y2 = padding + pos2.row * (cellHeight + gap) + cellHeight / 2;
+        // Get bounding rectangles for cells and the container
+        const firstRect = firstCell.getBoundingClientRect();
+        const lastRect = lastCell.getBoundingClientRect();
+        const containerRect = gameBoardContainer.getBoundingClientRect();
 
-        // Calculate line properties
-        const length = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
-        const angle = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
+        // Calculate center points of first and last cells relative to the game-board-container
+        const centerX1 = firstRect.left + firstRect.width / 2 - containerRect.left;
+        const centerY1 = firstRect.top + firstRect.height / 2 - containerRect.top;
+        const centerX2 = lastRect.left + lastRect.width / 2 - containerRect.left;
+        const centerY2 = lastRect.top + lastRect.height / 2 - containerRect.top;
 
-        // Apply styles with precise positioning
-        winningLine.style.position = 'absolute';
+        // Calculate line length and angle
+        const deltaX = centerX2 - centerX1;
+        const deltaY = centerY2 - centerY1;
+        const length = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+        const angle = Math.atan2(deltaY, deltaX) * 180 / Math.PI;
+
+        // Apply styles - position line at center of first cell, rotate to reach center of last cell
         winningLine.style.width = `${length}px`;
         winningLine.style.height = '4px';
-        winningLine.style.left = `${x1}px`;
-        winningLine.style.top = `${y1 - 2}px`;
+        winningLine.style.left = `${centerX1}px`;
+        winningLine.style.top = `${centerY1 - 2}px`; // -2 to center the 4px height line
         winningLine.style.transform = `rotate(${angle}deg)`;
         winningLine.style.transformOrigin = '0 50%';
-        winningLine.style.zIndex = '10';
-        winningLine.style.borderRadius = '2px';
         winningLine.classList.add('show');
 
         setTimeout(() => {
