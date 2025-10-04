@@ -1,182 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Infinite XOX – Strategic Tic-Tac-Toe Game Online | Play Free</title>
-    <meta name="description" content="Play Infinite XOX: a clever twist on Tic-Tac-Toe where you can only have 3 pieces. Place a 4th, and your oldest disappears! Free, no download, play in browser.">
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        .floating-top-ad {
-            position: fixed;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1000;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 5px;
-            border-radius: 0 0 8px 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        body {
-            padding-top: 80px;
-        }
-    </style>
-</head>
-<body>
+    <meta
+      name="description"
+      content="Play Infinite XOX: a clever twist on Tic-Tac-Toe where you can only have 3 pieces. Place a 4th, and your oldest disappears! Free, no download, play in browser."
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
     <!-- Top Floating Ad -->
     <div class="floating-top-ad">
-        <script type="text/javascript">
-            atOptions = {
-                'key' : 'c205b39798eea5b31df25712936440e7',
-                'format' : 'iframe',
-                'height' : 60,
-                'width' : 468,
-                'params' : {}
-            };
-        </script>
-        <script type="text/javascript" src="//www.highperformanceformat.com/c205b39798eea5b31df25712936440e7/invoke.js"></script>
+      <script type="text/javascript">
+        atOptions = {
+          key: "c205b39798eea5b31df25712936440e7",
+          format: "iframe",
+          height: 60,
+          width: 468,
+          params: {},
+        };
+      </script>
+      <script
+        type="text/javascript"
+        src="//www.highperformanceformat.com/c205b39798eea5b31df25712936440e7/invoke.js"
+      ></script>
     </div>
     <div class="container">
-        <!-- Header Section -->
-        <header class="header">
-            <div class="logo">
-                <h1 class="title">Infinite XOX</h1>
-                <p class="subtitle">Strategic Tic-Tac-Toe</p>
-            </div>
-            <div class="score-board">
-                <div class="score-item player">
-                    <span class="score-label">You</span>
-                    <span class="score-value" id="player-score">0</span>
-                </div>
-                <div class="vs-divider">VS</div>
-                <div class="score-item ai">
-                    <span class="score-label">AI</span>
-                    <span class="score-value" id="ai-score">0</span>
-                </div>
-            </div>
-        </header>
+      <!-- Header Section -->
+      <header class="header">
+        <div class="logo">
+          <h1 class="title">Infinite XOX</h1>
+          <p class="subtitle">Strategic Tic-Tac-Toe</p>
+        </div>
+        <div class="score-board">
+          <div class="score-item player">
+            <span class="score-label">You</span>
+            <span class="score-value" id="player-score">0</span>
+          </div>
+          <div class="vs-divider">VS</div>
+          <div class="score-item ai">
+            <span class="score-label">AI</span>
+            <span class="score-value" id="ai-score">0</span>
+          </div>
+        </div>
+      </header>
 
-        <!-- Game Status -->
-        <div class="game-status">
-            <div class="status-message" id="status-message">Your Turn (X)</div>
-            <div class="turn-indicator">
-                <div class="player-indicator active" id="player-indicator">
-                    <span class="symbol">X</span>
-                </div>
-                <div class="ai-indicator" id="ai-indicator">
-                    <span class="symbol">O</span>
-                </div>
-            </div>
+      <!-- Game Status -->
+      <div class="game-status">
+        <div class="status-message" id="status-message">Your Turn (X)</div>
+        <div class="turn-indicator">
+          <div class="player-indicator active" id="player-indicator">
+            <span class="symbol">X</span>
+          </div>
+          <div class="ai-indicator" id="ai-indicator">
+            <span class="symbol">O</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Game Board -->
+      <main class="game-board-container">
+        <div class="game-board" id="game-board">
+          <div class="cell" data-index="0"></div>
+          <div class="cell" data-index="1"></div>
+          <div class="cell" data-index="2"></div>
+          <div class="cell" data-index="3"></div>
+          <div class="cell" data-index="4"></div>
+          <div class="cell" data-index="5"></div>
+          <div class="cell" data-index="6"></div>
+          <div class="cell" data-index="7"></div>
+          <div class="cell" data-index="8"></div>
         </div>
 
-        <!-- Game Board -->
-        <main class="game-board-container">
-            <div class="game-board" id="game-board">
-                <div class="cell" data-index="0"></div>
-                <div class="cell" data-index="1"></div>
-                <div class="cell" data-index="2"></div>
-                <div class="cell" data-index="3"></div>
-                <div class="cell" data-index="4"></div>
-                <div class="cell" data-index="5"></div>
-                <div class="cell" data-index="6"></div>
-                <div class="cell" data-index="7"></div>
-                <div class="cell" data-index="8"></div>
-            </div>
+        <!-- Winning Line Overlay -->
+        <div class="winning-line" id="winning-line"></div>
+      </main>
 
-            <!-- Winning Line Overlay -->
-            <div class="winning-line" id="winning-line"></div>
-        </main>
+      <!-- Game Controls -->
+      <div class="game-controls">
+        <button class="btn btn-secondary" id="reset-round-btn">
+          Reset Round
+        </button>
+        <button class="btn btn-primary" id="new-game-btn">New Game</button>
+      </div>
 
-        <!-- Game Controls -->
-        <div class="game-controls">
-            <button class="btn btn-secondary" id="reset-round-btn">Reset Round</button>
-            <button class="btn btn-primary" id="new-game-btn">New Game</button>
+      <!-- Game Info -->
+      <div class="game-info">
+        <div class="info-card">
+          <h3>How to Play</h3>
+          <p>
+            Each player can only have 3 pieces on the board. When you place a
+            4th piece, your oldest piece disappears!
+          </p>
         </div>
-
-        <!-- Game Info -->
-        <div class="game-info">
-            <div class="info-card">
-                <h3>How to Play</h3>
-                <p>Each player can only have 3 pieces on the board. When you place a 4th piece, your oldest piece disappears!</p>
-            </div>
-            <div class="pieces-counter">
-                <div class="counter-item">
-                    <span class="counter-label">Your pieces:</span>
-                    <span class="counter-value" id="player-pieces">0</span>
-                </div>
-                <div class="counter-item">
-                    <span class="counter-label">AI pieces:</span>
-                    <span class="counter-value" id="ai-pieces">0</span>
-                </div>
-            </div>
+        <div class="pieces-counter">
+          <div class="counter-item">
+            <span class="counter-label">Your pieces:</span>
+            <span class="counter-value" id="player-pieces">0</span>
+          </div>
+          <div class="counter-item">
+            <span class="counter-label">AI pieces:</span>
+            <span class="counter-value" id="ai-pieces">0</span>
+          </div>
         </div>
+      </div>
 
-        <!-- SEO Content Section -->
-        <section class="seo-content">
-            <h2>Strategic Tic-Tac-Toe with a Twist</h2>
-            <p>Infinite XOX is a free online puzzle game based on classic Tic-Tac-Toe. Each player can only have 3 pieces on the board. When you place a 4th piece, your oldest one vanishes—adding deep strategy to every move!</p>
-            <p>Perfect for fans of logic games, brain teasers, and quick browser games. Play against a friend on the same device—no signup required.</p>
+      <!-- SEO Content Section -->
+      <section class="seo-content">
+        <h2>Strategic Tic-Tac-Toe with a Twist</h2>
+        <p>
+          Infinite XOX is a free online puzzle game based on classic
+          Tic-Tac-Toe. Each player can only have 3 pieces on the board. When you
+          place a 4th piece, your oldest one vanishes—adding deep strategy to
+          every move!
+        </p>
+        <p>
+          Perfect for fans of logic games, brain teasers, and quick browser
+          games. Play against a friend on the same device—no signup required.
+        </p>
 
-            <h3>Why Play Infinite XOX?</h3>
-            <ul>
-                <li><strong>Strategic Depth:</strong> Unlike traditional Tic-Tac-Toe, every move matters as pieces disappear</li>
-                <li><strong>Quick Games:</strong> Each round takes just minutes, perfect for short breaks</li>
-                <li><strong>No Download:</strong> Play instantly in your browser on any device</li>
-                <li><strong>Free Forever:</strong> No ads interrupting gameplay, completely free to play</li>
-                <li><strong>Offline Ready:</strong> Works without internet connection once loaded</li>
-            </ul>
+        <h3>Why Play Infinite XOX?</h3>
+        <ul>
+          <li>
+            <strong>Strategic Depth:</strong> Unlike traditional Tic-Tac-Toe,
+            every move matters as pieces disappear
+          </li>
+          <li>
+            <strong>Quick Games:</strong> Each round takes just minutes, perfect
+            for short breaks
+          </li>
+          <li>
+            <strong>No Download:</strong> Play instantly in your browser on any
+            device
+          </li>
+        </ul>
 
-            <h3>Game Features</h3>
-            <p>This strategic twist on the classic Tic-Tac-Toe game includes:</p>
-            <ul>
-                <li>Smart AI opponent with multiple difficulty levels</li>
-                <li>Real-time piece tracking and visual indicators</li>
-                <li>Smooth animations and modern UI design</li>
-                <li>Score tracking across multiple rounds</li>
-                <li>Responsive design that works on mobile and desktop</li>
-            </ul>
-        </section>
+        <h3>Game Features</h3>
+        <p>This strategic twist on the classic Tic-Tac-Toe game includes:</p>
+        <ul>
+          <li>Smart AI opponent with multiple difficulty levels</li>
+          <li>Real-time piece tracking and visual indicators</li>
+          <li>Smooth animations and modern UI design</li>
+          <li>Score tracking across multiple rounds</li>
+          <li>Responsive design that works on mobile and desktop</li>
+        </ul>
+      </section>
 
-        <!-- Game Over Modal -->
-        <div class="modal" id="game-over-modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 id="modal-title">Game Over!</h2>
-                </div>
-                <div class="modal-body">
-                    <p id="modal-message">Congratulations! You won the game!</p>
-                    <div class="final-score">
-                        <div class="final-score-item">
-                            <span>You:</span>
-                            <span id="final-player-score">0</span>
-                        </div>
-                        <div class="final-score-item">
-                            <span>AI:</span>
-                            <span id="final-ai-score">0</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-primary" id="play-again-btn">Play Again</button>
-                </div>
+      <!-- Game Over Modal -->
+      <div class="modal" id="game-over-modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 id="modal-title">Game Over!</h2>
+          </div>
+          <div class="modal-body">
+            <p id="modal-message">Congratulations! You won the game!</p>
+            <div class="final-score">
+              <div class="final-score-item">
+                <span>You:</span>
+                <span id="final-player-score">0</span>
+              </div>
+              <div class="final-score-item">
+                <span>AI:</span>
+                <span id="final-ai-score">0</span>
+              </div>
             </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-primary" id="play-again-btn">
+              Play Again
+            </button>
+          </div>
         </div>
+      </div>
     </div>
 
     <script src="script.js"></script>
 
-    <!-- Floating Ad -->
-    <script type="text/javascript">
-        atOptions = {
-            'key' : 'c205b39798eea5b31df25712936440e7',
-            'format' : 'iframe',
-            'height' : 60,
-            'width' : 468,
-            'params' : {}
-        };
-    </script>
-    <script type="text/javascript" src="//www.highperformanceformat.com/c205b39798eea5b31df25712936440e7/invoke.js"></script>
-</body>
+  </body>
 </html>
